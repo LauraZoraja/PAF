@@ -21,11 +21,15 @@ def koordinate():
             print('y = x {} {}'.format(p,l))
         else:
             print('y = x')
-    elif k!= 1:
+    elif k!= 1 and k!= 0:
         if l != 0:
-            print('y = {}x {} {}'.format(k,p,l))
+            print('y = {} x {} {}'.format(k,p,l))
         else:
-            print('y = {}x'.format(k))
-
+            print('y = {} x'.format(k))
+    else:
+        if l != 0:
+            print('y ={}'.format(l))
+        else:
+            print('y = {} {}'.format(p,k))
         
 koordinate()
