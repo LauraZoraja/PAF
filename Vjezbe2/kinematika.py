@@ -101,10 +101,14 @@ def kosi_hitac(v0,kut,t,dt=0.01):
     g = 9.81
     kutr = np.radians(kut)
     listax = []
+    listavx = []
+    listavy = []
     listay = []
     x = 0
     y = 0
     for T in np.arange(0,t,dt):
+        vx = v0*np.cos(kutr) - g*T
+        vy = v0*np.sin(kutr)
         x = x + v0*np.cos(kutr)*T
         y = y + v0*np.sin(kutr)*T - 0.5*g*T**2
         listax.append(x)
