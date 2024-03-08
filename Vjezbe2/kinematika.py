@@ -135,6 +135,3 @@ def kosi_hitac(v0,kut,t,dt=0.01):
     axis[2].set_ylabel('y [m]')
     plt.tight_layout()
     plt.show()
-
-jednoliko_gibanje(30,2,10)
-kosi_hitac(50,45,10)
