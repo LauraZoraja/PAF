@@ -70,15 +70,17 @@ def jednoliko_gibanje(F,m,t,dt=0.01):
     listaa = []
     listax = []
     listav = []
-    x = 0
-    v = 0
+    x_i = 0
+    v_i = 0
     for tn in np.arange(0,t,dt):
         a = F/m
-        x = (a*tn**2)/2
-        v = a*tn
+        v_2i = v_i + a*dt
+        x_2i = x_i + v_i*dt
         listaa.append(a)
-        listax.append(x)
-        listav.append(v)
+        listax.append(x_2i)
+        listav.append(v_2i)
+        v_i = v_2i
+        x_i = x_2i
 
     figure, axis = plt.subplots(3,1)
     axis[0].plot(list(np.arange(0,t,dt)),listaa,'r')
@@ -98,21 +100,28 @@ def kosi_hitac(v0,kut,t,dt=0.01):
     import matplotlib.pyplot as plt
     import numpy as np
 
-    g = 9.81
     kutr = np.radians(kut)
     listax = []
     listavx = []
     listavy = []
     listay = []
-    x = 0
-    y = 0
+    x_i = 0
+    y_i = 0
+    vx_i = v0*np.cos(kutr)
+    vy_i = v0*np.sin(kutr)
+    ax = 0
+    ay = -9.81
     for T in np.arange(0,t,dt):
-        vx = v0*np.cos(kutr) - g*T
-        vy = v0*np.sin(kutr)
-        x = x + v0*np.cos(kutr)*T
-        y = y + v0*np.sin(kutr)*T - 0.5*g*T**2
-        listax.append(x)
-        listay.append(y)
+        vx_2i = vx_i + ax*dt
+        vy_2i = vy_i + ay*dt
+        x_2i = x_i + vx_2i*dt
+        y_2i = y_i + vy_2i*dt
+        listax.append(x_2i)
+        listay.append(y_2i)
+        x_i = x_2i
+        y_i = y_2i
+        vx_i = vx_2i
+        vy_i = vy_2i
 
     figure, axis = plt.subplots(3,1)
     axis[0].plot(listax,listay,'r')
@@ -128,4 +137,4 @@ def kosi_hitac(v0,kut,t,dt=0.01):
     plt.show()
 
 jednoliko_gibanje(30,2,10)
-kosi_hitac(10,45,10,0.1)
+kosi_hitac(50,45,10)
