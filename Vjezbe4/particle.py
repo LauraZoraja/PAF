@@ -1,5 +1,6 @@
 class particle:
     import matplotlib.pyplot as plt
+    import numpy as np
     def __init__(self, x0, y0, v0, kut):
         import numpy as np
         self.x0 = x0
@@ -18,28 +19,30 @@ class particle:
         self.v0 = 0.
         self.kut = np.radians(0)
 
-    def __move(self, dt = 0.01):
-        self.x2i = self.xi + self.vxi*dt
+    def __move(self, dt):
+        self.dt = dt
+        self.x2i = self.xi + self.vxi*self.dt
         self.xi = self.x2i
-        self.y2i = self.yi + self.vyi*dt
+        self.y2i = self.yi + self.vyi*self.dt
         self.yi = self.y2i
 
-        self.vx2i = self.vxi + self.ax*dt
+        self.vx2i = self.vxi + self.ax*self.dt
         self.vxi = self.vx2i
-        self.vy2i = self.vyi - self.ay*dt
+        self.vy2i = self.vyi - self.ay*self.dt
         self.vyi = self.vy2i
 
 
-    def range(self):
+    def range(self, dt = 0.001):
+        self.dt = dt
         self.listaxi = []
         self.listayi = []
         self.yi = self.y0
         self.xi = self.x0
-        while self.yi >= 0.:
-            self.__move()
+        while self.yi >= 0:
+            self.__move(self.dt)
             self.listayi.append(self.yi)
             self.listaxi.append(self.xi)
-            if self.yi == 0.:
+            if self.yi == 0:
                 break
 
         print(self.listaxi[-1] - self.x0)
@@ -57,6 +60,6 @@ class particle:
         plt.show()
 
 
-p1 = particle(3,4,10,45)
-p1.plot_trajectory()
-p1.range()
+#p1 = particle(3,4,10,45)
+#p1.plot_trajectory()
+#p1.range()
