@@ -16,7 +16,7 @@ class particle:
         self.x0 = 0.
         self.y0 = 0.
         self.v0 = 0.
-        self.kut = np.rad(0.)
+        self.kut = np.radians(0)
 
     def __move(self, dt = 0.01):
         self.x2i = self.xi + self.vxi*dt
@@ -59,3 +59,4 @@ class particle:
 
 p1 = particle(3,4,10,45)
 p1.plot_trajectory()
+p1.range()
