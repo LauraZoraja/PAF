@@ -42,7 +42,7 @@ class particle:
             self.__move(self.dt)
             self.listayi.append(self.yi)
             self.listaxi.append(self.xi)
-            if self.yi == 0:
+            if self.yi < 0:
                 break
 
         print(self.listaxi[-1] - self.x0)
