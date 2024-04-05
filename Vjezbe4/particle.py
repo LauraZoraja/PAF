@@ -44,8 +44,8 @@ class particle:
             self.listaxi.append(self.xi)
             if self.yi < 0:
                 break
-
-        print(self.listaxi[-1] - self.x0)
+        self.D_n = self.listaxi[-1] - self.x0
+        print(self.D_n)
 
     def plot_trajectory(self):
         import matplotlib.pyplot as plt
