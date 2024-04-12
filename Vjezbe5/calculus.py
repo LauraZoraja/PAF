@@ -20,29 +20,37 @@ def f2(x):
 #der = derivacija(f2, 0.)
 #print(der)
 
-def der_granice(f,fa,d,g,epsilon = 1, metoda = 'three-step'):
-    tocke = []
-    derivacije = []
-    derivacije_a = []
-    for x in np.linspace(d,g):
-        b = x
-        derivacije_a.append(fa(b))
-    N = int(abs(g-d)/epsilon)
-    for x in np.linspace(d,g,N):
-        tocke.append(x)
-        a = x
-        derivacije_a.append(fa(x))
+
+def der_granice(f,fa,d,g,epsilon = 0.5, metoda = 'three-step'):
+    x = d
+    def three():
+        der = (f(x + epsilon) - f(x - epsilon)) / (2.*epsilon)
+        #derivacije.append(round(der,4))
+        return der
+
+    def two():
+        der = (f(x + epsilon) - f(x)) / (epsilon)
+        #derivacije.append(round(der,4))
+        return der
+    listad = []
+    listat = []
+    listada = []
+    while x>= d and x<=g:
+        listat.append(x)
         if metoda == 'three-step':
-            der = (f(a + epsilon) - f(a - epsilon)) / (2.*epsilon)
-            derivacije.append(round(der,4))
+            listad.append(three())
 
         elif metoda == 'two-step':
-            der = (f(a + epsilon) - f(a)) / (epsilon)
-            derivacije.append(round(der,4))
-    print(tocke,derivacije)
-    plt.plot(tocke,derivacije,'o',color = 'purple',markersize = 1)
-    plt.plot(tocke,derivacije_a)
-    plt.show()
+            listad.append(two())
+        listada.append(fa(x))
+        x += 0.1
+
+
+    
+    #print(tocke,derivacije)
+    #print(tocke,derivacije_a)
+    plt.plot(listat,listad,'o',color = 'purple',markersize = 5)
+    plt.plot(listat,listada)
 
 def f1(x):
     return x**3.
@@ -53,8 +61,17 @@ def f1a(b):
 def f2(x):
     return np.sin(x)
 
-def f2a(b):
-    return np.cos(b)
+def f2a(x):
+    return np.cos(x)
+
+def f3(x):
+    5.*x**3. - 2.*x**2. + 2.*x -3.
+
+def f3a(x):
+    15.*x**2. -4.*x +2.
 
 #der_granice(f1,f1a,-5.,5.,50.)
-der_granice(f2,f2a,0.,10.)
+
+der_granice(f2,f2a, -2.,2.)
+
+plt.show()
