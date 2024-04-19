@@ -34,17 +34,38 @@ class HarmonicOscillator:
             self.listax.append(self.xi)
             self.listaa.append(self.ai)
             self.listat.append(self.T)
-        figure, axis = plt.subplots(3,1)
-        axis[0].plot(self.listat,self.listax,'o',markersize = 1)
-        axis[1].plot(self.listat,self.listav,'o',markersize = 1)
-        axis[2].plot(self.listat,self.listaa,'o',markersize = 1)
-        axis[0].set_xlabel('t [s]')
-        axis[0].set_ylabel('a [m/$s^2$]')
-        axis[1].set_xlabel('t [s]')
-        axis[1].set_ylabel('v [m/s]')
-        axis[2].set_xlabel('t [s]')
-        axis[2].set_ylabel('x [m]')
-        plt.tight_layout()
+
+    def plot(self):
+        plt.subplot(3,1,1) #jedan redak, tri stupca, prvi graf
+        plt.plot(self.listat,self.listax,'o',markersize = 1)
+        plt.xlabel("t [s]")
+        plt.ylabel('x [m]')
+        plt.yticks(np.arange(round(min(self.listax),1),round(max(self.listax)+0.1,1),0.1))
+        plt.grid()
+        plt.title("Harmonic oscillator")
+
+        plt.subplot(3,1,2)
+        plt.plot(self.listat,self.listav,'o',markersize = 1)
+        plt.xlabel("t [s]")
+        plt.ylabel('v [m/s]')
+        plt.yticks(np.arange(round(min(self.listav)),round(max(self.listav)+1),1))
+        plt.grid()
+
+        plt.subplot(3,1,3)
+        plt.plot(self.listat,self.listaa,'o',markersize = 1, label = 'dt = {}'.format(self.dt))
+        plt.xlabel("t [s]")
+        plt.ylabel('a [m/$s^2$]')
+        plt.yticks(np.arange((round(min(self.listaa)+9)//10 * 10),round(max(self.listaa)),10))
+        plt.grid()
+
+    def plot_reset(self):
+        self.xi = self.listax[0]
+        self.ai = self.listaa[0]
+        self.vi = self.listav[0]
+        self.listax = [self.xi]
+        self.listav = [self.vi]
+        self.listaa = [self.ai]
+        self.listat = [0]
 
 
     #def plotx(self,t,dt = 0.01):
@@ -58,10 +79,30 @@ class HarmonicOscillator:
     
 
     def show(self):
+        plt.legend()
         plt.show()
+
+    def period(self,t,dt = 0.01):
+        self.t = t
+        self.dt = dt
+        self.oscilate(t,dt)
+        t1 = self.listax[0]
+        self.index = 'placeholder'
+        #self.index == self.listax.index(t1,1)
+        print(self.listax)
+
+
 
 h1 = HarmonicOscillator(10,0.1,0.3,2)
 h1.oscilate(2)
+h1.plot()
+h1.plot_reset()
 h1.oscilate(2,0.001)
+h1.plot()
+h1.plot_reset()
 h1.oscilate(2,0.05)
+h1.plot()
+h1.plot_reset()
 h1.show()
+
+h1.period(2)
