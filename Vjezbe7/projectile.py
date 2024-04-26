@@ -53,7 +53,7 @@ class projectile:
         return 0
 
     def plot(self):
-        plt.plot(self.listax,self.listay,'o',markersize = 1, label = 'dt = {},{}'.format(self.dt,self.metoda))
+        plt.plot(self.listax,self.listay,markersize = 1, label = 'dt = {},{}'.format(self.dt,self.metoda))
         plt.xlabel("x [m]")
         plt.ylabel('y [m]')
         plt.grid()
@@ -79,13 +79,13 @@ class projectile:
         plt.show()
 
 h1 = projectile(2,2,0,0,15,45,1,0,3)
+h1.euler(0.1)
+h1.plot()
+h1.plot_reset()
 h1.euler()
 h1.plot()
 h1.plot_reset()
 h1.euler(0.001)
-h1.plot()
-h1.plot_reset()
-h1.euler(0.05)
 h1.plot()
 h1.plot_reset()
 h1.show()
