@@ -82,42 +82,26 @@ class HarmonicOscillator:
         plt.legend()
         plt.show()
 
-    def period(self,t,dt = 0.01):
+    def period(self,t,xi = 0,dt = 0.01):
         self.t = t
         self.dt = dt
         self.oscilate(t,dt)
         self.listax_abs1 = []
-        self.listax_pomocno = [self.listax[0]]
+        self.listax_pomocno = []
         self.lista_period = []
-        T = 0
+        self.xi = xi
         for i in self.listax:
-            i = abs(i)
-            self.listax_abs1.append(i)
-        for j in self.listax_abs1:
-            while j < self.listax_pomocno[-1]:
-                self.listax_pomocno.append(j)
-                if j > self.listax_pomocno[-1]:
-                    break
-        self.indexj = len(self.listax_pomocno)
-        print(self.listax_pomocno)
-        for z in self.listax_abs1:
-            for x in range(self.indexj + 1,len(self.listax_abs1)):
-                if x <= self.indexj:
-                    continue
-                elif x < self.indexj:
-                    while z < self.listax_pomocno[-1]:
-                        self.listax_pomocno.append(x)
-                        if z > self.listax_pomocno[-1]:
-                            break
-        print(self.listax_pomocno)
-        #print(self.listax)
-        self.indexk = len(self.listax_pomocno)
-        print(self.indexj,self.indexk)
-        for x in range(self.indexj,self.indexk):
-            self.lista_period.append(self.listat[x])
-        #T = self.lista_period[-1] - self.lista_period[0]
-        #print(np.radians(T))
-        print(T)
+            if abs(round(i-self.xi,2)) == abs(round(self.xi)):
+                self.listax_pomocno.append(i)
+        p2 = self.listax_pomocno[2]
+        t2i = self.listax.index(p2)
+        Tn = self.listat[t2i]
+        print('Numericka vrijednost perioda za dt = {} je {}'.format(self.dt,Tn))
+        Ta = 2*np.pi*np.sqrt(self.m/self.k)
+        print('Analiticka vrijednost perioda je {}'.format(Ta))
+        
+
+        
 
 
 
@@ -135,6 +119,6 @@ h1.plot()
 h1.plot_reset()
 h1.show()
 
-h1.period(2)
-h1.period(2,0.001)
-h1.period(2,0.05)
+h1.period(2,0.3,0.01)
+h1.period(2,0.3,0.001)
+h1.period(2,0.3,0.05)
