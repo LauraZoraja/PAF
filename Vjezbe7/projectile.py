@@ -87,7 +87,6 @@ class projectile:
             self.listax.append(self.x)
             self.listay.append(self.y)
             self.listat.append(self.T)
-        print(self.listay)
 
 
     def plot(self):
