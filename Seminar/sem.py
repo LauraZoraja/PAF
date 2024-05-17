@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class Particle:
-    def __init__(self, T, mpolje = 'placeholder', epolje = 'placeholder', q = -1, m = 1, dt = 0.01):
+    def __init__(self, T, Ex, Ey, Ez, Bx, By, Bz, mpolje = 'placeholder', epolje = 'placeholder', q = -1., m = 1., dt = 0.001):
         self.m = m
         self.q = q
         self.dt = dt
@@ -13,9 +13,9 @@ class Particle:
         self.t = 0.
         self.v = np.array((0.1,0.1,0.1))
         self.epolje = epolje
-        self.E = np.array((0.,0.,self.t))
         self.mpolje = mpolje
-        self.B = np.array((0.,0.,self.t/10.))
+        self.E = np.array((Ex, Ey, Ez))
+        self.B = np.array((Bx,By,Bz(self.t)))
         self.F = self.q * (self.E + np.cross(self.v, self.B))
         self.a = self.F / self.m
         if self.q == -1:
@@ -33,7 +33,7 @@ class Particle:
         self.a = self.F / self.m
         self.t += self.dt
         if self.mpolje == 'promjenjivo':
-            self.B += np.array((0.,0.,self.dt))
+            self.B += np.array((0.,0.,self.dt/10.))
         else:
             pass
     
@@ -51,7 +51,7 @@ class Particle:
         self.listav = [self.v]
         self.listaa = [self.a]
         self.listat = [0.]
-        while self.t < self.t:
+        while self.t < self.T:
             self.move_euler()
             self.listax.append(self.x)
             self.listay.append(self.y)
@@ -75,11 +75,20 @@ class Particle:
 
 fig = plt.figure()
 ax = plt.axes(projection ='3d')
-h1  = Particle(30,'konstantno','konstantno')
-h2 = Particle(30,'promjenjivo','konsatntno')
+ax.set_box_aspect([1,1,1])
+def Bz1(t):
+    return (1./10.)*t
+
+def Bz2(t):
+    return 1.
+h1  = Particle(30.,0.,0.,0.,0.,0.,Bz1,'promjenjivo', 'konstantno')
+h2 = Particle(30.,0.,0.,0.,0.,0.,Bz2,'konstantno', 'konstantno')
+h3 = Particle(30.,0.,0.,0.,0.,0.,Bz1,'promjenjivo', 'konstantno', 1)
 h1.euler()
 h2.euler()
+h3.euler()
 h1.plot()
-h2.plot()  
+h2.plot() 
+h3.plot() 
 ax.legend()
 plt.show()
