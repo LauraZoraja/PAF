@@ -39,7 +39,7 @@ class Particle:
             pass
     
         if self.epolje == 'promjenjivo':
-            self.E += np.array((0.,0.,self.dt/100.))
+            self.E += np.array((0.,0.,self.dt/10.))
         else:
             pass
 
@@ -82,7 +82,7 @@ def Bz2(t):
     return 1.
 
 def Ez1(t):
-    return (1./100.)*t
+    return (1./10.)*t
 
 def Ez2(t):
     return 0.
@@ -93,7 +93,7 @@ fig = plt.figure()
 ax = plt.axes(projection ='3d')
 ax.set_box_aspect([1,1,1])
 h1 = Particle(30.,0.,0.,Ez2,0.,0.,Bz2,'konstantno', 'konstantno')
-h2  = Particle(30.,0.,0.,Ez1,0.,0.,Bz2,'konstantno', 'promjenjivo')
+h2  = Particle(30.,0.,0.,Ez2,0.,0.,Bz2,'konstantno', 'konstantno',1)
 h1.euler()
 h2.euler()
 h1.plot('blueviolet')
@@ -105,9 +105,9 @@ plt.show()
 fig = plt.figure()
 ax = plt.axes(projection ='3d')
 ax.set_box_aspect([1,1,1])
-h2  = Particle(30.,0.,0.,Ez1,0.,0.,Bz2,'konstantno', 'promjenjivo')
-h2.euler()
-h2.plot('lightseagreen')
+h9  = Particle(30.,0.,0.,Ez1,0.,0.,Bz2,'konstantno', 'promjenjivo')
+h9.euler()
+h9.plot('lightseagreen')
 ax.legend()
 plt.show()
 
