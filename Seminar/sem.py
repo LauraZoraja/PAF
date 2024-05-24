@@ -39,7 +39,7 @@ class Particle:
             pass
     
         if self.epolje == 'promjenjivo':
-            self.E += np.array((0.,0.,self.dt/1000.))
+            self.E += np.array((0.,0.,self.dt/100.))
         else:
             pass
 
@@ -82,7 +82,7 @@ def Bz2(t):
     return 1.
 
 def Ez1(t):
-    return (1./1000.)*t
+    return (1./100.)*t
 
 def Ez2(t):
     return 0.
@@ -133,7 +133,7 @@ fig = plt.figure()
 ax = plt.axes(projection ='3d')
 #ax.set_box_aspect([1,1,1])
 h7 = Particle(30.,0.,0.,Ez1,0.,0.,Bz1,'promjenjivo', 'promjenjivo')
-h8  = Particle(30.,0.,0.,Ez1,0.,0.,Bz1,'promjenjivo', 'promjenjivo',1)
+h8  = Particle(30.,0.,0.,Ez1,0.,0.,Bz1,'promjenjivo', 'promjenjivo', 1)
 h7.euler()
 h8.euler()
 h7.plot('deeppink')
