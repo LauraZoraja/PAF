@@ -88,7 +88,7 @@ def Ez2(t):
     return 0.
 
 
-#konstantno magnetsko, elektron
+#konstantno magnetsko
 fig = plt.figure()
 ax = plt.axes(projection ='3d')
 ax.set_box_aspect([1,1,1])
@@ -106,8 +106,11 @@ fig = plt.figure()
 ax = plt.axes(projection ='3d')
 ax.set_box_aspect([1,1,1])
 h9  = Particle(30.,0.,0.,Ez1,0.,0.,Bz2,'konstantno', 'promjenjivo')
+h90  = Particle(30.,0.,0.,Ez1,0.,0.,Bz2,'konstantno', 'promjenjivo',1)
 h9.euler()
-h9.plot('lightseagreen')
+h90.euler()
+h9.plot('blueviolet')
+h90.plot('lightseagreen')
 ax.legend()
 plt.show()
 
