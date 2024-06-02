@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class Particle:
-    def __init__(self, T, Ex, Ey, Ez, Bx, By, Bz, mpolje = 'placeholder', epolje = 'placeholder', q = -1., m = 1., dt = 0.001):
+    def __init__(self, T, Ex, Ey, Ez, Bx, By, Bz, mpolje = 'placeholder', epolje = 'placeholder', q = -1., m = 1., dt = 0.001, v = np.array((0.1,0.1,0.1))):
         self.m = m
         self.q = q
         self.dt = dt
@@ -11,12 +11,17 @@ class Particle:
         self.y = 0.
         self.z = 0.
         self.t = 0.
-        self.v = np.array((0.1,0.1,0.1))
+        self.v = v
         self.epolje = epolje
         self.mpolje = mpolje
+        self.Bx = Bx
+        self.By = By
+        self.Bz = Bz
+        self.Ex = Ex
+        self.Ey = Ey
         self.Ez = Ez if callable(Ez) else lambda t: Ez
-        self.B = np.array((Bx,By,Bz(self.t)))
-        self.E = np.array((Ex,Ey,self.Ez(self.t)))
+        self.B = np.array((self.Bx,self.By,self.Bz(self.t)))
+        self.E = np.array((self.Ex,self.Ey,self.Ez(self.t)))
         self.F = self.q * (self.E + np.cross(self.v, self.B))
         self.a = self.F / self.m
         if self.q == -1:
@@ -33,15 +38,17 @@ class Particle:
         self.F = self.q * (self.E + np.cross(self.v, self.B))
         self.a = self.F / self.m
         self.t += self.dt
-        if self.mpolje == 'promjenjivo':
-            self.B += np.array((0.,0.,self.dt/10.))
-        else:
-            pass
+        self.B = ((self.Bx,self.By,self.Bz(self.t)))
+        self.E = ((self.Ex,self.Ey,self.Ez(self.t)))
+        #if self.mpolje == 'promjenjivo':
+        #    self.B += self.B
+        #else:
+        #    pass
     
-        if self.epolje == 'promjenjivo':
-            self.E += np.array((0.,0.,self.dt/10.))
-        else:
-            pass
+        #if self.epolje == 'promjenjivo':
+        #    self.E += self.E
+        #else:
+        #    pass
 
 
     def euler(self):
@@ -64,15 +71,6 @@ class Particle:
     def plot(self,color = 'blue'):
         ax.plot(self.listax, self.listay, self.listaz, label = '{},{} magnetsko polje i {} elektricno polje'.format(self.cestica,self.mpolje,self.epolje), color = color)
 
-    def plot_reset(self):
-        self.x = self.listax[0]
-        self.y = self.listay[0]
-        self.z = self.listaz[0]
-        self.v = self.listav[0]
-        self.listax = [self.x]
-        self.listay = [self.y]
-        self.listaz = [self.z]
-        self.listav = [self.v]
 
 
 def Bz1(t):
